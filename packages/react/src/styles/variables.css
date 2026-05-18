@@ -1,0 +1,13 @@
+:root {
+  --gryde-color-bg: #ffffff;
+  --gryde-color-border: #d9dee7;
+  --gryde-color-text: #111827;
+  --gryde-color-muted: #667085;
+  --gryde-color-header-bg: #f4f6f8;
+  --gryde-color-row-hover-bg: #eef3f8;
+  --gryde-row-height-normal: 44px;
+  --gryde-cell-padding-x: 12px;
+  --gryde-border-radius: 8px;
+  --gryde-font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}

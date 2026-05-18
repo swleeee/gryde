@@ -1,0 +1,73 @@
+.root {
+  width: 100%;
+  overflow: auto;
+  border: 1px solid var(--gryde-color-border);
+  border-radius: var(--gryde-border-radius);
+  background: var(--gryde-color-bg);
+  color: var(--gryde-color-text);
+  font-family: var(--gryde-font-family);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.header {
+  background: var(--gryde-color-header-bg);
+}
+
+.headerCell {
+  height: var(--gryde-row-height-normal);
+  padding: 0 var(--gryde-cell-padding-x);
+  border-bottom: 1px solid var(--gryde-color-border);
+  color: var(--gryde-color-muted);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.row {
+  height: var(--gryde-row-height-normal);
+}
+
+.row:hover {
+  background: var(--gryde-color-row-hover-bg);
+}
+
+.cell {
+  padding: 0 var(--gryde-cell-padding-x);
+  border-bottom: 1px solid var(--gryde-color-border);
+  font-size: 14px;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row:last-child .cell {
+  border-bottom: 0;
+}
+
+.emptyCell {
+  height: calc(var(--gryde-row-height-normal) * 2);
+  padding: 0 var(--gryde-cell-padding-x);
+  color: var(--gryde-color-muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
