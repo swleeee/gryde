@@ -8,7 +8,10 @@
     "dev": "pnpm --filter @gryde/docs dev",
     "storybook": "pnpm --filter @gryde/docs storybook",
     "build": "pnpm -r build",
-    "test": "pnpm -r test"
+    "test": "pnpm -r test",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check"
   },
   "devDependencies": {
     "@storybook/addon-docs": "^10.4.0",
@@ -18,8 +21,12 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.59.3",
+    "@typescript-eslint/parser": "^8.59.3",
     "@vitejs/plugin-react": "^6.0.2",
+    "eslint": "^8.57.1",
     "jsdom": "^29.1.1",
+    "prettier": "^3.8.3",
     "storybook": "^10.4.0",
     "typescript": "^6.0.3",
     "vite": "^8.0.13",

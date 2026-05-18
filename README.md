@@ -22,6 +22,16 @@ Gryde는 구조화된 데이터를 다양한 방식으로 보여주기 위한 Re
 - Vitest
 - Testing Library
 
+## Verification
+
+```sh
+pnpm --filter @gryde/react build
+pnpm exec tsc -p packages/react/tsconfig.json --noEmit
+pnpm --filter @gryde/docs build
+pnpm lint
+pnpm format:check
+```
+
 ## Project Structure
 
 ```txt
