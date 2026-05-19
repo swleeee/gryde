@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Gryde } from "./Gryde";
-import type { GrydeColumn, SortingState } from "../models";
+import type { GrydeColumn, PaginationState, SortingState } from "../models";
 
 interface User {
   id: number;
@@ -32,6 +32,34 @@ const users: User[] = [
     email: "evelyn@example.com",
     status: "inactive",
     amount: 74000
+  },
+  {
+    id: 4,
+    name: "Katherine Johnson",
+    email: "katherine@example.com",
+    status: "active",
+    amount: 112000
+  },
+  {
+    id: 5,
+    name: "Mary Jackson",
+    email: "mary@example.com",
+    status: "inactive",
+    amount: 88000
+  },
+  {
+    id: 6,
+    name: "Dorothy Vaughan",
+    email: "dorothy@example.com",
+    status: "active",
+    amount: 104000
+  },
+  {
+    id: 7,
+    name: "Joan Clarke",
+    email: "joan@example.com",
+    status: "active",
+    amount: 91000
   }
 ];
 
@@ -126,6 +154,38 @@ export const ControlledSorting: Story = {
         sorting={{
           value: sorting,
           onChange: setSorting
+        }}
+      />
+    );
+  }
+};
+
+export const ClientPagination: Story = {
+  args: {
+    pagination: {
+      defaultValue: {
+        page: 1,
+        pageSize: 3
+      },
+      pageSizeOptions: [2, 3, 5]
+    }
+  }
+};
+
+export const ControlledPagination: Story = {
+  render: (args) => {
+    const [pagination, setPagination] = useState<PaginationState>({
+      page: 1,
+      pageSize: 3
+    });
+
+    return (
+      <Gryde
+        {...args}
+        pagination={{
+          value: pagination,
+          onChange: setPagination,
+          pageSizeOptions: [2, 3, 5]
         }}
       />
     );

@@ -86,6 +86,95 @@
   text-align: center;
 }
 
+.pagination {
+  display: flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px var(--gryde-cell-padding-x);
+  border-top: 1px solid var(--gryde-color-border);
+  color: var(--gryde-color-muted);
+  font-size: 13px;
+}
+
+.paginationSummary {
+  min-width: 90px;
+}
+
+.pageSizeControl {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.pageSizeSelectWrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.pageSizeSelectWrap::after {
+  position: absolute;
+  right: 8px;
+  width: 0;
+  height: 0;
+  border-top: 4px solid var(--gryde-color-muted);
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  content: "";
+  pointer-events: none;
+}
+
+.pageSizeSelect {
+  height: 28px;
+  min-width: 58px;
+  appearance: none;
+  padding: 0 24px 0 9px;
+  border: 1px solid var(--gryde-color-border);
+  border-radius: 6px;
+  background: var(--gryde-color-bg);
+  color: var(--gryde-color-text);
+  font: inherit;
+}
+
+.paginationControls {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.paginationButton {
+  min-width: 52px;
+  height: 28px;
+  padding: 0 9px;
+  border: 1px solid var(--gryde-color-border);
+  border-radius: 6px;
+  background: var(--gryde-color-bg);
+  color: var(--gryde-color-text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.paginationButton:disabled {
+  color: var(--gryde-color-muted);
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.paginationButton:focus-visible,
+.pageSizeSelect:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.pageIndicator {
+  min-width: 44px;
+  color: var(--gryde-color-text);
+  text-align: center;
+}
+
 .visuallyHidden {
   position: absolute;
   width: 1px;
