@@ -30,6 +30,32 @@
   white-space: nowrap;
 }
 
+.sortButton {
+  display: inline-flex;
+  width: 100%;
+  min-height: var(--gryde-row-height-normal);
+  align-items: center;
+  justify-content: inherit;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.sortButton:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.sortIndicator {
+  color: var(--gryde-color-muted);
+  font-size: 12px;
+}
+
 .row {
   height: var(--gryde-row-height-normal);
 }

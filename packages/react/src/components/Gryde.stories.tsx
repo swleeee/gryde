@@ -1,6 +1,7 @@
+import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Gryde } from "./Gryde";
-import type { GrydeColumn } from "../models";
+import type { GrydeColumn, SortingState } from "../models";
 
 interface User {
   id: number;
@@ -39,12 +40,14 @@ const columns: GrydeColumn<User>[] = [
     id: "name",
     header: "Name",
     accessor: (row) => row.name,
+    sortable: true,
     width: "24%"
   },
   {
     id: "email",
     header: "Email",
     accessor: (row) => row.email,
+    sortable: true,
     width: "34%"
   },
   {
@@ -68,6 +71,7 @@ const columns: GrydeColumn<User>[] = [
     header: "Amount",
     accessor: (row) => row.amount,
     format: (value) => (typeof value === "number" ? `$${value.toLocaleString()}` : null),
+    sortable: true,
     align: "right",
     width: "24%"
   }
@@ -101,5 +105,29 @@ export const Empty: Story = {
   args: {
     rows: [],
     emptyMessage: "No users"
+  }
+};
+
+export const ClientSorting: Story = {
+  args: {
+    sorting: {
+      defaultValue: [{ columnId: "amount", direction: "desc" }]
+    }
+  }
+};
+
+export const ControlledSorting: Story = {
+  render: (args) => {
+    const [sorting, setSorting] = useState<SortingState>([{ columnId: "name", direction: "asc" }]);
+
+    return (
+      <Gryde
+        {...args}
+        sorting={{
+          value: sorting,
+          onChange: setSorting
+        }}
+      />
+    );
   }
 };
