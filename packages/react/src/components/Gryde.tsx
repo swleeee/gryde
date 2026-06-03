@@ -22,6 +22,7 @@ export const Gryde = <TRow,>({
   pagination,
   rowSelection,
   columnVisibility,
+  density = "normal",
   emptyMessage = "No rows",
   className,
   "aria-label": ariaLabel
@@ -102,7 +103,14 @@ export const Gryde = <TRow,>({
   };
 
   return (
-    <div className={cx(styles.root, className)}>
+    <div
+      className={cx(
+        styles.root,
+        density === "compact" && styles.densityCompact,
+        density === "comfortable" && styles.densityComfortable,
+        className
+      )}
+    >
       <table className={styles.table}>
         {ariaLabel ? <caption className={styles.visuallyHidden}>{ariaLabel}</caption> : null}
         <GrydeHeader

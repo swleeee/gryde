@@ -90,3 +90,21 @@ describe("Gryde column visibility", () => {
     expect(screen.queryByText("Ada")).not.toBeInTheDocument();
   });
 });
+
+describe("Gryde density", () => {
+  it("compact density class를 root에 적용한다", () => {
+    const { container } = render(
+      <Gryde rows={rows} columns={columns} getRowId={(row) => row.id} density="compact" />
+    );
+
+    expect(container.firstChild).toHaveClass("densityCompact");
+  });
+
+  it("comfortable density class를 root에 적용한다", () => {
+    const { container } = render(
+      <Gryde rows={rows} columns={columns} getRowId={(row) => row.id} density="comfortable" />
+    );
+
+    expect(container.firstChild).toHaveClass("densityComfortable");
+  });
+});

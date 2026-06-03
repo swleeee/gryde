@@ -3,6 +3,7 @@ export type { RowSelectionConfig } from "./row-selection.interface";
 export type { ColumnVisibilityConfig, ColumnVisibilityState } from "./column-visibility.interface";
 export type { GrydeCellContext, GrydeColumn } from "./column.interface";
 export type { GrydeProps } from "./gryde-props.interface";
+export type { GrydeDensity } from "./density.type";
 export type { PaginationConfig, PaginationState } from "./pagination.interface";
 export type {
   SortingConfig,

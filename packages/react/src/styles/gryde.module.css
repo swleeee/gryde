@@ -1,4 +1,7 @@
 .root {
+  --gryde-current-row-height: var(--gryde-row-height-normal);
+  --gryde-current-cell-padding-x: var(--gryde-cell-padding-x);
+
   width: 100%;
   overflow: auto;
   border: 1px solid var(--gryde-color-border);
@@ -6,6 +9,16 @@
   background: var(--gryde-color-bg);
   color: var(--gryde-color-text);
   font-family: var(--gryde-font-family);
+}
+
+.densityCompact {
+  --gryde-current-row-height: var(--gryde-row-height-compact);
+  --gryde-current-cell-padding-x: var(--gryde-cell-padding-x-compact);
+}
+
+.densityComfortable {
+  --gryde-current-row-height: var(--gryde-row-height-comfortable);
+  --gryde-current-cell-padding-x: var(--gryde-cell-padding-x-comfortable);
 }
 
 .table {
@@ -19,8 +32,8 @@
 }
 
 .headerCell {
-  height: var(--gryde-row-height-normal);
-  padding: 0 var(--gryde-cell-padding-x);
+  height: var(--gryde-current-row-height);
+  padding: 0 var(--gryde-current-cell-padding-x);
   border-bottom: 1px solid var(--gryde-color-border);
   color: var(--gryde-color-muted);
   font-size: 13px;
@@ -33,7 +46,7 @@
 .sortButton {
   display: inline-flex;
   width: 100%;
-  min-height: var(--gryde-row-height-normal);
+  min-height: var(--gryde-current-row-height);
   align-items: center;
   justify-content: inherit;
   gap: 6px;
@@ -57,7 +70,7 @@
 }
 
 .row {
-  height: var(--gryde-row-height-normal);
+  height: var(--gryde-current-row-height);
 }
 
 .row:hover {
@@ -69,7 +82,7 @@
 }
 
 .cell {
-  padding: 0 var(--gryde-cell-padding-x);
+  padding: 0 var(--gryde-current-cell-padding-x);
   border-bottom: 1px solid var(--gryde-color-border);
   font-size: 14px;
   line-height: 1.4;
@@ -91,11 +104,11 @@
 }
 
 .selectionHeaderCell {
-  height: var(--gryde-row-height-normal);
+  height: var(--gryde-current-row-height);
 }
 
 .selectionCell {
-  height: var(--gryde-row-height-normal);
+  height: var(--gryde-current-row-height);
 }
 
 .row:last-child .selectionCell {
@@ -179,8 +192,8 @@
 }
 
 .emptyCell {
-  height: calc(var(--gryde-row-height-normal) * 2);
-  padding: 0 var(--gryde-cell-padding-x);
+  height: calc(var(--gryde-current-row-height) * 2);
+  padding: 0 var(--gryde-current-cell-padding-x);
   color: var(--gryde-color-muted);
   font-size: 14px;
   text-align: center;
@@ -192,7 +205,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding: 6px var(--gryde-cell-padding-x);
+  padding: 6px var(--gryde-current-cell-padding-x);
   border-top: 1px solid var(--gryde-color-border);
   color: var(--gryde-color-muted);
   font-size: 13px;

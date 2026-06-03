@@ -1,5 +1,6 @@
 import type { GrydeColumn } from "./column.interface";
 import type { ColumnVisibilityConfig } from "./column-visibility.interface";
+import type { GrydeDensity } from "./density.type";
 import type { PaginationConfig } from "./pagination.interface";
 import type { RowSelectionConfig } from "./row-selection.interface";
 import type { RowKey } from "./row-key.type";
@@ -13,6 +14,7 @@ export interface GrydeProps<TRow> {
   pagination?: PaginationConfig;
   rowSelection?: RowSelectionConfig;
   columnVisibility?: ColumnVisibilityConfig;
+  density?: GrydeDensity;
   emptyMessage?: string;
   className?: string;
   "aria-label"?: string;

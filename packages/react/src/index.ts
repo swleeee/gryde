@@ -5,6 +5,7 @@ export type { UseControlledStateOptions, UseControlledStateReturn } from "./hook
 export type {
   GrydeCellContext,
   GrydeColumn,
+  GrydeDensity,
   GrydeProps,
   ColumnVisibilityConfig,
   ColumnVisibilityState,

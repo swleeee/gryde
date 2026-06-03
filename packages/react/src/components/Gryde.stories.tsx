@@ -272,3 +272,16 @@ export const ControlledColumnVisibility: Story = {
     );
   }
 };
+
+export const Density: Story = {
+  args: {
+    density: "compact",
+    pagination: {
+      defaultValue: {
+        page: 1,
+        pageSize: 5
+      },
+      pageSizeOptions: [3, 5]
+    }
+  }
+};
