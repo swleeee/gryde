@@ -47,7 +47,7 @@
 }
 
 .sortButton:focus-visible {
-  outline: 2px solid #2563eb;
+  outline: 2px solid var(--gryde-color-focus-ring);
   outline-offset: 2px;
 }
 
@@ -64,6 +64,10 @@
   background: var(--gryde-color-row-hover-bg);
 }
 
+.rowSelected {
+  background: var(--gryde-color-row-selected-bg);
+}
+
 .cell {
   padding: 0 var(--gryde-cell-padding-x);
   border-bottom: 1px solid var(--gryde-color-border);
@@ -76,6 +80,102 @@
 
 .row:last-child .cell {
   border-bottom: 0;
+}
+
+.selectionHeaderCell,
+.selectionCell {
+  width: 44px;
+  padding: 0;
+  border-bottom: 1px solid var(--gryde-color-border);
+  text-align: center;
+}
+
+.selectionHeaderCell {
+  height: var(--gryde-row-height-normal);
+}
+
+.selectionCell {
+  height: var(--gryde-row-height-normal);
+}
+
+.row:last-child .selectionCell {
+  border-bottom: 0;
+}
+
+.selectionCheckbox {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  appearance: none;
+  margin: 0;
+  border: 1px solid var(--gryde-color-border);
+  border-radius: 5px;
+  background: var(--gryde-color-bg);
+  box-shadow: 0 1px 1px rgb(17 24 39 / 4%);
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.selectionCheckbox:hover:not(:disabled) {
+  border-color: var(--gryde-color-accent);
+}
+
+.selectionCheckbox:checked,
+.selectionCheckbox:indeterminate {
+  border-color: var(--gryde-color-accent);
+  background: var(--gryde-color-accent);
+}
+
+.selectionCheckbox:checked::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 9px;
+  border: solid var(--gryde-color-accent-contrast);
+  border-width: 0 2px 2px 0;
+  content: "";
+  transform: translate(-50%, -58%) rotate(45deg);
+}
+
+.selectionCheckbox:indeterminate::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--gryde-color-accent-contrast);
+  content: "";
+  transform: translate(-50%, -50%);
+}
+
+.selectionCheckbox:disabled {
+  border-color: var(--gryde-color-control-disabled-border);
+  background: var(--gryde-color-control-disabled-bg);
+  cursor: not-allowed;
+}
+
+.selectionCheckbox:disabled:checked,
+.selectionCheckbox:disabled:indeterminate {
+  border-color: var(--gryde-color-control-disabled-border);
+  background: var(--gryde-color-control-disabled-border);
+}
+
+.selectionCheckbox:disabled:checked::after {
+  border-color: var(--gryde-color-accent-contrast);
+}
+
+.selectionCheckbox:disabled:indeterminate::after {
+  background: var(--gryde-color-accent-contrast);
+}
+
+.selectionCheckbox:focus-visible {
+  outline: 2px solid var(--gryde-color-focus-ring);
+  outline-offset: 2px;
 }
 
 .emptyCell {
@@ -165,7 +265,7 @@
 
 .paginationButton:focus-visible,
 .pageSizeSelect:focus-visible {
-  outline: 2px solid #2563eb;
+  outline: 2px solid var(--gryde-color-focus-ring);
   outline-offset: 2px;
 }
 

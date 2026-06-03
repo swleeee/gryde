@@ -1,11 +1,20 @@
 import type { Dispatch, SetStateAction } from "react";
 import type { GrydeColumn, SortingState } from "../models";
 import styles from "../styles/gryde.module.css";
+import { GrydeSelectionCheckbox } from "./GrydeSelectionCheckbox";
+
+interface GrydeHeaderRowSelection {
+  checked: boolean;
+  indeterminate: boolean;
+  disabled: boolean;
+  onToggle: () => void;
+}
 
 interface GrydeHeaderProps<TRow> {
   columns: readonly GrydeColumn<TRow>[];
   sorting: SortingState;
   onSortingChange: Dispatch<SetStateAction<SortingState>>;
+  rowSelection?: GrydeHeaderRowSelection;
 }
 
 const getAriaSort = (columnId: string, sorting: SortingState) => {
@@ -45,11 +54,23 @@ const getNextSorting = (columnId: string, sorting: SortingState): SortingState =
 export const GrydeHeader = <TRow,>({
   columns,
   sorting,
-  onSortingChange
+  onSortingChange,
+  rowSelection
 }: GrydeHeaderProps<TRow>) => {
   return (
     <thead className={styles.header}>
       <tr>
+        {rowSelection ? (
+          <th className={styles.selectionHeaderCell} scope="col">
+            <GrydeSelectionCheckbox
+              checked={rowSelection.checked}
+              disabled={rowSelection.disabled}
+              indeterminate={rowSelection.indeterminate}
+              label="Select all visible rows"
+              onChange={rowSelection.onToggle}
+            />
+          </th>
+        ) : null}
         {columns.map((column) => {
           const ariaSort = column.sortable ? getAriaSort(column.id, sorting) : undefined;
           const sortIndicator = getSortIndicator(column.id, sorting);

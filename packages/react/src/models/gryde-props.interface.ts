@@ -1,5 +1,6 @@
 import type { GrydeColumn } from "./column.interface";
 import type { PaginationConfig } from "./pagination.interface";
+import type { RowSelectionConfig } from "./row-selection.interface";
 import type { RowKey } from "./row-key.type";
 import type { SortingConfig } from "./sorting.interface";
 
@@ -9,6 +10,7 @@ export interface GrydeProps<TRow> {
   getRowId: (row: TRow, index: number) => RowKey;
   sorting?: SortingConfig;
   pagination?: PaginationConfig;
+  rowSelection?: RowSelectionConfig;
   emptyMessage?: string;
   className?: string;
   "aria-label"?: string;

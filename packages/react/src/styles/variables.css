@@ -3,8 +3,15 @@
   --gryde-color-border: #d9dee7;
   --gryde-color-text: #111827;
   --gryde-color-muted: #667085;
+  --gryde-color-disabled: #98a2b3;
+  --gryde-color-accent: #2563eb;
+  --gryde-color-accent-contrast: #ffffff;
+  --gryde-color-focus-ring: #2563eb;
   --gryde-color-header-bg: #f4f6f8;
   --gryde-color-row-hover-bg: #eef3f8;
+  --gryde-color-row-selected-bg: #f0f7ff;
+  --gryde-color-control-disabled-bg: #f2f4f7;
+  --gryde-color-control-disabled-border: #d0d5dd;
   --gryde-row-height-normal: 44px;
   --gryde-cell-padding-x: 12px;
   --gryde-border-radius: 8px;

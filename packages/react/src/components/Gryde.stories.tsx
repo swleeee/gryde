@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Gryde } from "./Gryde";
-import type { GrydeColumn, PaginationState, SortingState } from "../models";
+import type { GrydeColumn, PaginationState, RowKey, SortingState } from "../models";
 
 interface User {
   id: number;
@@ -186,6 +186,37 @@ export const ControlledPagination: Story = {
           value: pagination,
           onChange: setPagination,
           pageSizeOptions: [2, 3, 5]
+        }}
+      />
+    );
+  }
+};
+
+export const RowSelection: Story = {
+  args: {
+    rowSelection: {
+      defaultSelectedRowKeys: [2]
+    },
+    pagination: {
+      defaultValue: {
+        page: 1,
+        pageSize: 3
+      },
+      pageSizeOptions: [3, 5]
+    }
+  }
+};
+
+export const ControlledRowSelection: Story = {
+  render: (args) => {
+    const [selectedRowKeys, setSelectedRowKeys] = useState<RowKey[]>([1, 3]);
+
+    return (
+      <Gryde
+        {...args}
+        rowSelection={{
+          selectedRowKeys,
+          onChange: setSelectedRowKeys
         }}
       />
     );

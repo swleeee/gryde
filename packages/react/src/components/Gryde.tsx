@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import styles from "../styles/gryde.module.css";
 import "../styles/variables.css";
-import type { GrydeProps, PaginationState, SortingState } from "../models";
+import type { GrydeProps, PaginationState, RowKey, SortingState } from "../models";
 import { useControlledState } from "../hooks";
 import { clampPage, cx, getPageCount, paginateRows, sortRows } from "../utils";
 import { GrydeBody } from "./GrydeBody";
@@ -14,6 +14,7 @@ export const Gryde = <TRow,>({
   getRowId,
   sorting,
   pagination,
+  rowSelection,
   emptyMessage = "No rows",
   className,
   "aria-label": ariaLabel
@@ -28,6 +29,11 @@ export const Gryde = <TRow,>({
     defaultValue: pagination?.defaultValue ?? { page: 1, pageSize: 10 },
     onChange: pagination?.onChange
   });
+  const [selectedRowKeys, setSelectedRowKeys] = useControlledState<RowKey[]>({
+    value: rowSelection?.selectedRowKeys,
+    defaultValue: rowSelection?.defaultSelectedRowKeys ?? [],
+    onChange: rowSelection?.onChange
+  });
   const sortedRows = useMemo(
     () => sortRows(rows, columns, sortingState),
     [rows, columns, sortingState]
@@ -38,17 +44,74 @@ export const Gryde = <TRow,>({
     page: clampPage(paginationState.page, pageCount)
   };
   const visibleRows = pagination ? paginateRows(sortedRows, clampedPagination) : sortedRows;
+  const visibleRowKeys = useMemo(
+    () => visibleRows.map((row, rowIndex) => getRowId(row, rowIndex)),
+    [getRowId, visibleRows]
+  );
+  const selectedRowKeySet = useMemo(() => new Set(selectedRowKeys), [selectedRowKeys]);
+  const selectedVisibleRowCount = visibleRowKeys.filter((rowKey) =>
+    selectedRowKeySet.has(rowKey)
+  ).length;
+  const areAllVisibleRowsSelected =
+    visibleRowKeys.length > 0 && selectedVisibleRowCount === visibleRowKeys.length;
+  const areSomeVisibleRowsSelected =
+    selectedVisibleRowCount > 0 && selectedVisibleRowCount < visibleRowKeys.length;
+
+  const toggleVisibleRows = () => {
+    setSelectedRowKeys((previousSelectedRowKeys) => {
+      const nextSelectedRowKeySet = new Set(previousSelectedRowKeys);
+
+      if (areAllVisibleRowsSelected) {
+        visibleRowKeys.forEach((rowKey) => nextSelectedRowKeySet.delete(rowKey));
+      } else {
+        visibleRowKeys.forEach((rowKey) => nextSelectedRowKeySet.add(rowKey));
+      }
+
+      return Array.from(nextSelectedRowKeySet);
+    });
+  };
+
+  const toggleRow = (rowKey: RowKey) => {
+    setSelectedRowKeys((previousSelectedRowKeys) => {
+      const nextSelectedRowKeySet = new Set(previousSelectedRowKeys);
+
+      if (nextSelectedRowKeySet.has(rowKey)) {
+        nextSelectedRowKeySet.delete(rowKey);
+      } else {
+        nextSelectedRowKeySet.add(rowKey);
+      }
+
+      return Array.from(nextSelectedRowKeySet);
+    });
+  };
 
   return (
     <div className={cx(styles.root, className)}>
       <table className={styles.table}>
         {ariaLabel ? <caption className={styles.visuallyHidden}>{ariaLabel}</caption> : null}
-        <GrydeHeader columns={columns} sorting={sortingState} onSortingChange={setSortingState} />
+        <GrydeHeader
+          columns={columns}
+          sorting={sortingState}
+          onSortingChange={setSortingState}
+          rowSelection={
+            rowSelection
+              ? {
+                  checked: areAllVisibleRowsSelected,
+                  indeterminate: areSomeVisibleRowsSelected,
+                  disabled: visibleRowKeys.length === 0,
+                  onToggle: toggleVisibleRows
+                }
+              : undefined
+          }
+        />
         <GrydeBody
           rows={visibleRows}
           columns={columns}
           getRowId={getRowId}
           emptyMessage={emptyMessage}
+          selectedRowKeySet={selectedRowKeySet}
+          selectionEnabled={Boolean(rowSelection)}
+          onRowToggle={toggleRow}
         />
       </table>
       {pagination ? (

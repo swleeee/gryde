@@ -9,6 +9,7 @@ export type {
   PaginationConfig,
   PaginationState,
   RowKey,
+  RowSelectionConfig,
   SortingConfig,
   SortingDirection,
   SortingItem,
