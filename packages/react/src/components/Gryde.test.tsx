@@ -74,3 +74,19 @@ describe("Gryde row selection", () => {
     expect(screen.getByLabelText("Select row 3")).toBeChecked();
   });
 });
+
+describe("Gryde column visibility", () => {
+  it("false로 설정된 column은 렌더링하지 않는다", () => {
+    render(
+      <Gryde
+        rows={rows}
+        columns={columns}
+        getRowId={(row) => row.id}
+        columnVisibility={{ defaultValue: { name: false } }}
+      />
+    );
+
+    expect(screen.queryByText("Name")).not.toBeInTheDocument();
+    expect(screen.queryByText("Ada")).not.toBeInTheDocument();
+  });
+});

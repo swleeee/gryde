@@ -6,6 +6,8 @@ export type {
   GrydeCellContext,
   GrydeColumn,
   GrydeProps,
+  ColumnVisibilityConfig,
+  ColumnVisibilityState,
   PaginationConfig,
   PaginationState,
   RowKey,

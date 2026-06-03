@@ -1,9 +1,15 @@
 import { useMemo } from "react";
 import styles from "../styles/gryde.module.css";
 import "../styles/variables.css";
-import type { GrydeProps, PaginationState, RowKey, SortingState } from "../models";
+import type {
+  ColumnVisibilityState,
+  GrydeProps,
+  PaginationState,
+  RowKey,
+  SortingState
+} from "../models";
 import { useControlledState } from "../hooks";
-import { clampPage, cx, getPageCount, paginateRows, sortRows } from "../utils";
+import { clampPage, cx, getPageCount, getVisibleColumns, paginateRows, sortRows } from "../utils";
 import { GrydeBody } from "./GrydeBody";
 import { GrydeHeader } from "./GrydeHeader";
 import { GrydePagination } from "./GrydePagination";
@@ -15,6 +21,7 @@ export const Gryde = <TRow,>({
   sorting,
   pagination,
   rowSelection,
+  columnVisibility,
   emptyMessage = "No rows",
   className,
   "aria-label": ariaLabel
@@ -29,11 +36,20 @@ export const Gryde = <TRow,>({
     defaultValue: pagination?.defaultValue ?? { page: 1, pageSize: 10 },
     onChange: pagination?.onChange
   });
+  const [columnVisibilityState] = useControlledState<ColumnVisibilityState>({
+    value: columnVisibility?.value,
+    defaultValue: columnVisibility?.defaultValue ?? {},
+    onChange: columnVisibility?.onChange
+  });
   const [selectedRowKeys, setSelectedRowKeys] = useControlledState<RowKey[]>({
     value: rowSelection?.selectedRowKeys,
     defaultValue: rowSelection?.defaultSelectedRowKeys ?? [],
     onChange: rowSelection?.onChange
   });
+  const visibleColumns = useMemo(
+    () => getVisibleColumns(columns, columnVisibilityState),
+    [columns, columnVisibilityState]
+  );
   const sortedRows = useMemo(
     () => sortRows(rows, columns, sortingState),
     [rows, columns, sortingState]
@@ -90,7 +106,7 @@ export const Gryde = <TRow,>({
       <table className={styles.table}>
         {ariaLabel ? <caption className={styles.visuallyHidden}>{ariaLabel}</caption> : null}
         <GrydeHeader
-          columns={columns}
+          columns={visibleColumns}
           sorting={sortingState}
           onSortingChange={setSortingState}
           rowSelection={
@@ -106,7 +122,7 @@ export const Gryde = <TRow,>({
         />
         <GrydeBody
           rows={visibleRows}
-          columns={columns}
+          columns={visibleColumns}
           getRowId={getRowId}
           emptyMessage={emptyMessage}
           selectedRowKeySet={selectedRowKeySet}

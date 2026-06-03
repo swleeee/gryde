@@ -1,7 +1,13 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Gryde } from "./Gryde";
-import type { GrydeColumn, PaginationState, RowKey, SortingState } from "../models";
+import type {
+  ColumnVisibilityState,
+  GrydeColumn,
+  PaginationState,
+  RowKey,
+  SortingState
+} from "../models";
 
 interface User {
   id: number;
@@ -219,6 +225,50 @@ export const ControlledRowSelection: Story = {
           onChange: setSelectedRowKeys
         }}
       />
+    );
+  }
+};
+
+export const ColumnVisibility: Story = {
+  args: {
+    columnVisibility: {
+      defaultValue: {
+        email: false,
+        status: false
+      }
+    }
+  }
+};
+
+export const ControlledColumnVisibility: Story = {
+  render: (args) => {
+    const [columnVisibility, setColumnVisibility] = useState<ColumnVisibilityState>({
+      email: false
+    });
+
+    return (
+      <div style={{ display: "grid", gap: 12 }}>
+        <label>
+          <input
+            checked={columnVisibility.email !== false}
+            type="checkbox"
+            onChange={(event) =>
+              setColumnVisibility((previousVisibility) => ({
+                ...previousVisibility,
+                email: event.target.checked
+              }))
+            }
+          />{" "}
+          Show email
+        </label>
+        <Gryde
+          {...args}
+          columnVisibility={{
+            value: columnVisibility,
+            onChange: setColumnVisibility
+          }}
+        />
+      </div>
     );
   }
 };
