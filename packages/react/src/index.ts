@@ -1,11 +1,13 @@
 export { Gryde } from "./components";
 export { useControlledState } from "./hooks";
-export { clampPage, getPageCount, paginateRows, sortRows } from "./utils";
+export { clampPage, getAdaptiveHeight, getPageCount, paginateRows, sortRows } from "./utils";
 export type { UseControlledStateOptions, UseControlledStateReturn } from "./hooks";
 export type {
   GrydeCellContext,
   GrydeColumn,
   GrydeDensity,
+  GrydeHeightMode,
+  AdaptiveHeightOptions,
   GrydeProps,
   ColumnVisibilityConfig,
   ColumnVisibilityState,

@@ -108,3 +108,26 @@ describe("Gryde density", () => {
     expect(container.firstChild).toHaveClass("densityComfortable");
   });
 });
+
+describe("Gryde adaptive height", () => {
+  it("minRows와 maxRows 기준의 높이를 root에 적용한다", () => {
+    const { container } = render(
+      <Gryde
+        rows={rows.slice(0, 1)}
+        columns={columns}
+        getRowId={(row) => row.id}
+        heightMode={{
+          type: "adaptive",
+          minRows: 3,
+          maxRows: 10,
+          rowHeight: 44
+        }}
+      />
+    );
+
+    expect(container.firstChild).toHaveStyle({
+      minHeight: "176px",
+      maxHeight: "484px"
+    });
+  });
+});

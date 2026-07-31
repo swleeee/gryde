@@ -69,6 +69,17 @@ const users: User[] = [
   }
 ];
 
+const manyUsers = Array.from(
+  { length: 100 },
+  (_, index): User => ({
+    id: index + 1,
+    name: `User ${index + 1}`,
+    email: `user${index + 1}@example.com`,
+    status: index % 3 === 0 ? "inactive" : "active",
+    amount: 50000 + index * 1000
+  })
+);
+
 const columns: GrydeColumn<User>[] = [
   {
     id: "name",
@@ -282,6 +293,42 @@ export const Density: Story = {
         pageSize: 5
       },
       pageSizeOptions: [3, 5]
+    }
+  }
+};
+
+export const AdaptiveHeightEmpty: Story = {
+  args: {
+    rows: [],
+    heightMode: {
+      type: "adaptive",
+      minRows: 3,
+      maxRows: 10,
+      rowHeight: 44
+    }
+  }
+};
+
+export const AdaptiveHeightFewRows: Story = {
+  args: {
+    rows: users.slice(0, 3),
+    heightMode: {
+      type: "adaptive",
+      minRows: 3,
+      maxRows: 10,
+      rowHeight: 44
+    }
+  }
+};
+
+export const AdaptiveHeightManyRows: Story = {
+  args: {
+    rows: manyUsers,
+    heightMode: {
+      type: "adaptive",
+      minRows: 3,
+      maxRows: 10,
+      rowHeight: 44
     }
   }
 };

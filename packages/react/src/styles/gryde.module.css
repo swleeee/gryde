@@ -3,12 +3,21 @@
   --gryde-current-cell-padding-x: var(--gryde-cell-padding-x);
 
   width: 100%;
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   border: 1px solid var(--gryde-color-border);
   border-radius: var(--gryde-border-radius);
   background: var(--gryde-color-bg);
   color: var(--gryde-color-text);
   font-family: var(--gryde-font-family);
+}
+
+.scrollArea {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  scrollbar-gutter: stable;
 }
 
 .densityCompact {
@@ -23,7 +32,8 @@
 
 .table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   table-layout: fixed;
 }
 
@@ -32,9 +42,13 @@
 }
 
 .headerCell {
+  position: sticky;
+  top: 0;
+  z-index: 1;
   height: var(--gryde-current-row-height);
   padding: 0 var(--gryde-current-cell-padding-x);
   border-bottom: 1px solid var(--gryde-color-border);
+  background: var(--gryde-color-header-bg);
   color: var(--gryde-color-muted);
   font-size: 13px;
   font-weight: 600;
@@ -104,7 +118,12 @@
 }
 
 .selectionHeaderCell {
+  position: sticky;
+  top: 0;
+  z-index: 1;
   height: var(--gryde-current-row-height);
+  border-bottom: 1px solid var(--gryde-color-border);
+  background: var(--gryde-color-header-bg);
 }
 
 .selectionCell {
