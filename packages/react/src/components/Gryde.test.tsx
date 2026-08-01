@@ -1,9 +1,9 @@
 import "@testing-library/jest-dom/vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { Gryde } from "./Gryde";
-import type { GrydeColumn } from "../models";
+import type { GrydeColumn, GrydePreset } from "../models";
 
 interface User {
   id: number;
@@ -129,5 +129,64 @@ describe("Gryde adaptive height", () => {
       minHeight: "176px",
       maxHeight: "484px"
     });
+  });
+});
+
+describe("Gryde view preset", () => {
+  it("preset의 초기 grid 상태를 적용한다", () => {
+    const preset: GrydePreset = {
+      id: "compact",
+      label: "Compact view",
+      state: {
+        columnVisibility: { name: false },
+        density: "compact"
+      },
+      layout: {
+        heightMode: {
+          type: "adaptive",
+          minRows: 3,
+          maxRows: 10,
+          rowHeight: 36
+        }
+      }
+    };
+    const { container } = render(
+      <Gryde rows={rows.slice(0, 1)} columns={columns} getRowId={(row) => row.id} preset={preset} />
+    );
+
+    expect(screen.queryByText("Name")).not.toBeInTheDocument();
+    expect(container.firstChild).toHaveClass("densityCompact");
+    expect(container.firstChild).toHaveStyle({
+      minHeight: "144px",
+      maxHeight: "396px"
+    });
+  });
+
+  it("preset id가 바뀌면 정의된 상태를 적용한다", async () => {
+    const defaultPreset: GrydePreset = {
+      id: "default",
+      label: "Default view",
+      state: {
+        columnVisibility: { name: false }
+      }
+    };
+    const detailedPreset: GrydePreset = {
+      id: "detailed",
+      label: "Detailed view",
+      state: {
+        columnVisibility: { name: true }
+      }
+    };
+    const { rerender } = render(
+      <Gryde rows={rows} columns={columns} getRowId={(row) => row.id} preset={defaultPreset} />
+    );
+
+    expect(screen.queryByText("Name")).not.toBeInTheDocument();
+
+    rerender(
+      <Gryde rows={rows} columns={columns} getRowId={(row) => row.id} preset={detailedPreset} />
+    );
+
+    await waitFor(() => expect(screen.getByText("Name")).toBeInTheDocument());
   });
 });

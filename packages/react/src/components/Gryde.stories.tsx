@@ -1,9 +1,11 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Gryde } from "./Gryde";
+import { GrydePresetSelect } from "./GrydePresetSelect";
 import type {
   ColumnVisibilityState,
   GrydeColumn,
+  GrydePreset,
   PaginationState,
   RowKey,
   SortingState
@@ -123,6 +125,55 @@ const columns: GrydeColumn<User>[] = [
 ];
 
 const UserGryde = Gryde<User>;
+
+const presets: GrydePreset[] = [
+  {
+    id: "default",
+    label: "Default view",
+    state: {
+      sorting: [{ columnId: "amount", direction: "desc" }],
+      pagination: { page: 1, pageSize: 3 },
+      columnVisibility: { status: false },
+      density: "normal"
+    }
+  },
+  {
+    id: "compact",
+    label: "Compact view",
+    state: {
+      sorting: [{ columnId: "name", direction: "asc" }],
+      pagination: { page: 1, pageSize: 5 },
+      columnVisibility: { email: false, status: false },
+      density: "compact"
+    },
+    layout: {
+      heightMode: {
+        type: "adaptive",
+        minRows: 3,
+        maxRows: 6,
+        rowHeight: 36
+      }
+    }
+  },
+  {
+    id: "comfortable",
+    label: "Comfortable view",
+    state: {
+      sorting: [{ columnId: "amount", direction: "desc" }],
+      pagination: { page: 1, pageSize: 5 },
+      columnVisibility: {},
+      density: "comfortable"
+    },
+    layout: {
+      heightMode: {
+        type: "adaptive",
+        minRows: 3,
+        maxRows: 6,
+        rowHeight: 52
+      }
+    }
+  }
+];
 
 const meta = {
   title: "Gryde/Basic",
@@ -329,6 +380,25 @@ export const AdaptiveHeightManyRows: Story = {
       minRows: 3,
       maxRows: 10,
       rowHeight: 44
+    }
+  }
+};
+
+export const ViewPreset: Story = {
+  render: (args) => {
+    const [activePresetId, setActivePresetId] = useState(presets[0].id);
+    const activePreset = presets.find((preset) => preset.id === activePresetId);
+
+    return (
+      <div style={{ display: "grid", gap: 12 }}>
+        <GrydePresetSelect presets={presets} value={activePresetId} onChange={setActivePresetId} />
+        <Gryde {...args} preset={activePreset} />
+      </div>
+    );
+  },
+  args: {
+    pagination: {
+      pageSizeOptions: [3, 5]
     }
   }
 };

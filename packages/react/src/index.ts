@@ -1,6 +1,13 @@
-export { Gryde } from "./components";
+export { Gryde, GrydePresetSelect } from "./components";
 export { useControlledState } from "./hooks";
-export { clampPage, getAdaptiveHeight, getPageCount, paginateRows, sortRows } from "./utils";
+export {
+  applyPresetState,
+  clampPage,
+  getAdaptiveHeight,
+  getPageCount,
+  paginateRows,
+  sortRows
+} from "./utils";
 export type { UseControlledStateOptions, UseControlledStateReturn } from "./hooks";
 export type {
   GrydeCellContext,
@@ -13,6 +20,9 @@ export type {
   ColumnVisibilityState,
   PaginationConfig,
   PaginationState,
+  GrydePreset,
+  GrydePresetLayout,
+  GrydePresetState,
   RowKey,
   RowSelectionConfig,
   SortingConfig,

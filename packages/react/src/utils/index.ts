@@ -1,3 +1,4 @@
+export { applyPresetState } from "./applyPresetState";
 export { cx } from "./cx";
 export { getAdaptiveHeight } from "./getAdaptiveHeight";
 export { getVisibleColumns } from "./getVisibleColumns";

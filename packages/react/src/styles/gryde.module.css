@@ -271,6 +271,21 @@
   font: inherit;
 }
 
+.presetSelect {
+  min-height: 32px;
+  padding: 0 28px 0 10px;
+  border: 1px solid var(--gryde-color-border);
+  border-radius: 6px;
+  background: var(--gryde-color-bg);
+  color: var(--gryde-color-text);
+  font: inherit;
+}
+
+.presetSelect:focus-visible {
+  outline: 2px solid var(--gryde-color-focus-ring);
+  outline-offset: 2px;
+}
+
 .paginationControls {
   display: inline-flex;
   align-items: center;

@@ -6,6 +6,7 @@ export type { GrydeProps } from "./gryde-props.interface";
 export type { GrydeDensity } from "./density.type";
 export type { AdaptiveHeightOptions, GrydeHeightMode } from "./height-mode.interface";
 export type { PaginationConfig, PaginationState } from "./pagination.interface";
+export type { GrydePreset, GrydePresetLayout, GrydePresetState } from "./preset.interface";
 export type {
   SortingConfig,
   SortingDirection,

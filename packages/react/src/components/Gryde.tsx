@@ -1,4 +1,4 @@
-import { useMemo, type CSSProperties } from "react";
+import { useEffect, useMemo, useRef, type CSSProperties } from "react";
 import styles from "../styles/gryde.module.css";
 import "../styles/variables.css";
 import type {
@@ -50,32 +50,62 @@ export const Gryde = <TRow,>({
   pagination,
   rowSelection,
   columnVisibility,
-  density = "normal",
+  density,
   heightMode,
+  preset,
   emptyMessage = "No rows",
   className,
   "aria-label": ariaLabel
 }: GrydeProps<TRow>) => {
   const [sortingState, setSortingState] = useControlledState<SortingState>({
     value: sorting?.value,
-    defaultValue: sorting?.defaultValue ?? [],
+    defaultValue: preset?.state.sorting ?? sorting?.defaultValue ?? [],
     onChange: sorting?.onChange
   });
   const [paginationState, setPaginationState] = useControlledState<PaginationState>({
     value: pagination?.value,
-    defaultValue: pagination?.defaultValue ?? { page: 1, pageSize: 10 },
+    defaultValue: preset?.state.pagination ?? pagination?.defaultValue ?? { page: 1, pageSize: 10 },
     onChange: pagination?.onChange
   });
-  const [columnVisibilityState] = useControlledState<ColumnVisibilityState>({
-    value: columnVisibility?.value,
-    defaultValue: columnVisibility?.defaultValue ?? {},
-    onChange: columnVisibility?.onChange
-  });
+  const [columnVisibilityState, setColumnVisibilityState] =
+    useControlledState<ColumnVisibilityState>({
+      value: columnVisibility?.value,
+      defaultValue: preset?.state.columnVisibility ?? columnVisibility?.defaultValue ?? {},
+      onChange: columnVisibility?.onChange
+    });
   const [selectedRowKeys, setSelectedRowKeys] = useControlledState<RowKey[]>({
     value: rowSelection?.selectedRowKeys,
     defaultValue: rowSelection?.defaultSelectedRowKeys ?? [],
     onChange: rowSelection?.onChange
   });
+  const previousPresetId = useRef(preset?.id);
+  const effectiveDensity = density ?? preset?.state.density ?? "normal";
+  const effectiveHeightMode = heightMode ?? preset?.layout?.heightMode;
+
+  useEffect(() => {
+    if (previousPresetId.current === preset?.id) {
+      return;
+    }
+
+    previousPresetId.current = preset?.id;
+
+    if (!preset) {
+      return;
+    }
+
+    if (preset.state.sorting !== undefined) {
+      setSortingState(preset.state.sorting);
+    }
+
+    if (preset.state.pagination !== undefined) {
+      setPaginationState(preset.state.pagination);
+    }
+
+    if (preset.state.columnVisibility !== undefined) {
+      setColumnVisibilityState(preset.state.columnVisibility);
+    }
+  }, [preset, setColumnVisibilityState, setPaginationState, setSortingState]);
+
   const visibleColumns = useMemo(
     () => getVisibleColumns(columns, columnVisibilityState),
     [columns, columnVisibilityState]
@@ -91,10 +121,14 @@ export const Gryde = <TRow,>({
   };
   const visibleRows = pagination ? paginateRows(sortedRows, clampedPagination) : sortedRows;
   const adaptiveHeight = useMemo(() => {
-    const options = getAdaptiveHeightOptions(heightMode, visibleRows.length, Boolean(pagination));
+    const options = getAdaptiveHeightOptions(
+      effectiveHeightMode,
+      visibleRows.length,
+      Boolean(pagination)
+    );
 
     return options ? getAdaptiveHeight(options) : undefined;
-  }, [heightMode, pagination, visibleRows.length]);
+  }, [effectiveHeightMode, pagination, visibleRows.length]);
   const rootStyle: CSSProperties | undefined = adaptiveHeight
     ? {
         minHeight: adaptiveHeight.minHeight,
@@ -146,8 +180,8 @@ export const Gryde = <TRow,>({
     <div
       className={cx(
         styles.root,
-        density === "compact" && styles.densityCompact,
-        density === "comfortable" && styles.densityComfortable,
+        effectiveDensity === "compact" && styles.densityCompact,
+        effectiveDensity === "comfortable" && styles.densityComfortable,
         className
       )}
       style={rootStyle}
