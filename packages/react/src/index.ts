@@ -1,4 +1,5 @@
-export { Gryde, GrydePresetSelect } from "./components";
+export { Gryde, GrydeColumnVisibilitySelect, GrydePresetSelect } from "./components";
+export type { GrydeColumnVisibilitySelectProps } from "./components";
 export { useControlledState } from "./hooks";
 export {
   applyPresetState,

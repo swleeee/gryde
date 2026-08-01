@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { GrydeColumnVisibilitySelect } from "./GrydeColumnVisibilitySelect";
 import { Gryde } from "./Gryde";
 import { GrydePresetSelect } from "./GrydePresetSelect";
 import type {
@@ -323,6 +324,31 @@ export const ControlledColumnVisibility: Story = {
           />{" "}
           Show email
         </label>
+        <Gryde
+          {...args}
+          columnVisibility={{
+            value: columnVisibility,
+            onChange: setColumnVisibility
+          }}
+        />
+      </div>
+    );
+  }
+};
+
+export const ColumnVisibilitySelector: Story = {
+  render: (args) => {
+    const [columnVisibility, setColumnVisibility] = useState<ColumnVisibilityState>({
+      email: false
+    });
+
+    return (
+      <div style={{ display: "grid", gap: 12 }}>
+        <GrydeColumnVisibilitySelect
+          columns={columns}
+          value={columnVisibility}
+          onChange={setColumnVisibility}
+        />
         <Gryde
           {...args}
           columnVisibility={{
